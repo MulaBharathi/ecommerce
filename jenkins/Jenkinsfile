@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+    environment {
+        DOCKER_REGISTRY = "bharu2703"  // Replace with your Docker registry (e.g., Docker Hub username)
+        AWS_REGION = "us-west-2"       // Set the AWS region for EKS
+        EKS_CLUSTER_NAME = "my-eks-cluster"  // Set your EKS cluster name
+    }
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    // Build all Docker images
+                    sh 'docker build -t bharu2703/order-service ./order-service'
+                    sh 'docker build -t bharu2703/product-service ./product-service'
+                    sh 'docker build -t bharu2703/user-service ./user-service'
+                }
+            }
+        }
+        stage('Push') {
+            steps {
+                script {
+                    // Push all Docker images to Docker Hub
+                    sh 'docker push bharu2703/order-service'
+                    sh 'docker push bharu2703/product-service'
+                    sh 'docker push bharu2703/user-service'
+                }
+            }
+        }
+        stage('Authenticate to EKS') {
+            steps {
+                script {
+                    sh '''
+                    aws eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER_NAME
+                    '''
+                }
+            }
+        }
+        stage('Deploy to EKS') {
+            steps {
+                script {
+                    // Deploy the services to EKS
+                    sh 'kubectl apply -f k8s/deployment-order.yaml'
+                    sh 'kubectl apply -f k8s/service-order.yaml'
+                    
+                    sh 'kubectl apply -f k8s/deployment-product.yaml'
+                    sh 'kubectl apply -f k8s/service-product.yaml'
+                    
+                    sh 'kubectl apply -f k8s/deployment-user.yaml'
+                    sh 'kubectl apply -f k8s/service-user.yaml'
+                }
+            }
+        }
+    }
+}

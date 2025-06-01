@@ -1,0 +1,26 @@
+{
+    "annotations": {
+      "list": []
+    },
+    "dashboard": {
+      "id": null,
+      "uid": "ecommerce-dashboard",
+      "title": "Ecommerce Application Dashboard",
+      "tags": ["ecommerce", "flask", "metrics"],
+      "timezone": "browser",
+      "panels": [
+        {
+          "type": "graph",
+          "title": "User Service Metrics",
+          "targets": [
+            {
+              "expr": "flask_app_http_requests_total{app=\"user-service\"}",
+              "format": "time_series"
+            }
+          ]
+        }
+      ]
+    },
+    "overwrite": true
+  }
+  
