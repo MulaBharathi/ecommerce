@@ -9,7 +9,6 @@ This project is a cloud-native e-commerce application using a microservices arch
 - **Order Service** – Order placement and tracking
 
 
-
 ## Build Docker Images
 # Build images for each service
 
