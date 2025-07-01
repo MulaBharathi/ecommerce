@@ -1,26 +1,115 @@
 {
-    "annotations": {
-      "list": []
-    },
-    "dashboard": {
-      "id": null,
-      "uid": "ecommerce-dashboard",
-      "title": "Ecommerce Application Dashboard",
-      "tags": ["ecommerce", "flask", "metrics"],
-      "timezone": "browser",
-      "panels": [
+  "id": null,
+  "uid": "ecommerce-dashboard",
+  "title": "E-commerce Microservices Dashboard",
+  "timezone": "browser",
+  "editable": true,
+  "schemaVersion": 27,
+  "version": 1,
+  "refresh": "5s",
+  "panels": [
+    {
+      "type": "graph",
+      "title": "User Service - HTTP Requests",
+      "targets": [
         {
-          "type": "graph",
-          "title": "User Service Metrics",
-          "targets": [
-            {
-              "expr": "flask_app_http_requests_total{app=\"user-service\"}",
-              "format": "time_series"
-            }
-          ]
+          "expr": "flask_http_request_total{job=\"user-service\"}",
+          "legendFormat": "{{method}} {{status}}",
+          "refId": "A"
         }
-      ]
+      ],
+      "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 }
     },
-    "overwrite": true
-  }
-  
+    {
+      "type": "graph",
+      "title": "Product Service - HTTP Requests",
+      "targets": [
+        {
+          "expr": "flask_http_request_total{job=\"product-service\"}",
+          "legendFormat": "{{method}} {{status}}",
+          "refId": "B"
+        }
+      ],
+      "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 }
+    },
+    {
+      "type": "graph",
+      "title": "Order Service - HTTP Requests",
+      "targets": [
+        {
+          "expr": "flask_http_request_total{job=\"order-service\"}",
+          "legendFormat": "{{method}} {{status}}",
+          "refId": "C"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 8, "w": 12, "h": 8 }
+    },
+    {
+      "type": "graph",
+      "title": "User Service - CPU Usage",
+      "targets": [
+        {
+          "expr": "process_cpu_seconds_total{job=\"user-service\"}",
+          "refId": "D"
+        }
+      ],
+      "gridPos": { "x": 12, "y": 8, "w": 12, "h": 8 }
+    },
+    {
+      "type": "graph",
+      "title": "Product Service - CPU Usage",
+      "targets": [
+        {
+          "expr": "process_cpu_seconds_total{job=\"product-service\"}",
+          "refId": "E"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 16, "w": 12, "h": 8 }
+    },
+    {
+      "type": "graph",
+      "title": "Order Service - CPU Usage",
+      "targets": [
+        {
+          "expr": "process_cpu_seconds_total{job=\"order-service\"}",
+          "refId": "F"
+        }
+      ],
+      "gridPos": { "x": 12, "y": 16, "w": 12, "h": 8 }
+    },
+    {
+      "type": "graph",
+      "title": "User Service - Memory Usage",
+      "targets": [
+        {
+          "expr": "process_resident_memory_bytes{job=\"user-service\"}",
+          "refId": "G"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 24, "w": 12, "h": 8 }
+    },
+    {
+      "type": "graph",
+      "title": "Product Service - Memory Usage",
+      "targets": [
+        {
+          "expr": "process_resident_memory_bytes{job=\"product-service\"}",
+          "refId": "H"
+        }
+      ],
+      "gridPos": { "x": 12, "y": 24, "w": 12, "h": 8 }
+    },
+    {
+      "type": "graph",
+      "title": "Order Service - Memory Usage",
+      "targets": [
+        {
+          "expr": "process_resident_memory_bytes{job=\"order-service\"}",
+          "refId": "I"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 32, "w": 12, "h": 8 }
+    }
+  ]
+}
+
